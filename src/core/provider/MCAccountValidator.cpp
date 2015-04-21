@@ -44,9 +44,9 @@ void AccountValidator::init()
     mImapServer = NULL;
     mPopServer = NULL;
     mSmtpServer = NULL;
-    mImapError = ErrorNone;
-    mPopError = ErrorNone;
-    mSmtpError = ErrorNone;
+    mImapErrors = new Array();
+    mPopErrors = new Array();
+    mSmtpErrors = new Array();
     
     mCurrentServiceIndex = 0;
     mCurrentServiceTested = 0;
@@ -168,9 +168,9 @@ void AccountValidator::resolveMX()
         mQueue->addOperation(mResolveMX);
     }
     else {
-        mImapError = ErrorNoValidServerFound;
-        mPopError = ErrorNoValidServerFound;
-        mSmtpError = ErrorNoValidServerFound;
+        mImapErrors->addObject(Value::valueWithIntValue(ErrorNoValidServerFound));
+        mPopErrors->addObject(Value::valueWithIntValue(ErrorNoValidServerFound));
+        mSmtpErrors->addObject(Value::valueWithIntValue(ErrorNoValidServerFound));
         
         callback()->operationFinished(this);
     }
@@ -216,13 +216,13 @@ void AccountValidator::startCheckingHosts()
     }
 
     if (mImapServices->count() == 0)
-        mImapError = ErrorNoValidServerFound;
+        mImapErrors->addObject(Value::valueWithIntValue(ErrorNoValidServerFound));
     
     if (mPopServices->count() == 0)
-        mPopError = ErrorNoValidServerFound;
+        mPopErrors->addObject(Value::valueWithIntValue(ErrorNoValidServerFound));
     
     if (mSmtpServices->count() == 0)
-        mSmtpError = ErrorNoValidServerFound;
+        mSmtpErrors->addObject(Value::valueWithIntValue(ErrorNoValidServerFound));
     
     checkNextHost();
 }
@@ -332,18 +332,30 @@ void AccountValidator::checkNextHostDone()
     ErrorCode error = ErrorNone;
     
     if (mCurrentServiceTested == SERVICE_IMAP) {
-        mImapError = ((IMAPOperation *)mOperation)->error();
-        error = mImapError;
+        error = ((IMAPOperation *)mOperation)->error();
+        if (error == ErrorNone) {
+            mImapErrors->removeAllObjects();
+        } else {
+            mImapErrors->addObject(Value::valueWithIntValue(error));
+        }
         MC_SAFE_RELEASE(mImapSession);
     }
     else if (mCurrentServiceTested == SERVICE_POP) {
-        mPopError = ((POPOperation *)mOperation)->error();
-        error = mPopError;
+        error = ((POPOperation *)mOperation)->error();
+        if (error == ErrorNone) {
+            mPopErrors->removeAllObjects();
+        } else {
+            mPopErrors->addObject(Value::valueWithIntValue(error));
+        }
         MC_SAFE_RELEASE(mPopSession);
     }
     else if (mCurrentServiceTested == SERVICE_SMTP) {
-        mSmtpError = ((SMTPOperation *)mOperation)->error();
-        error = mSmtpError;
+        error = ((SMTPOperation *)mOperation)->error();
+        if (error == ErrorNone) {
+            mSmtpErrors->removeAllObjects();
+        } else {
+            mSmtpErrors->addObject(Value::valueWithIntValue(error));
+        }
         MC_SAFE_RELEASE(mSmtpSession);
     }
     
@@ -481,17 +493,17 @@ NetService * AccountValidator::popServer()
     return mPopServer;
 }
 
-ErrorCode AccountValidator::imapError()
+Array * AccountValidator::imapErrors()
 {
-    return mImapError;
+    return mImapErrors;
 }
 
-ErrorCode AccountValidator::popError()
+Array * AccountValidator::popErrors()
 {
-    return mPopError;
+    return mPopErrors;
 }
 
-ErrorCode AccountValidator::smtpError()
+Array * AccountValidator::smtpErrors()
 {
-    return mSmtpError;
+    return mSmtpErrors;
 }

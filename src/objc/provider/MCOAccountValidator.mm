@@ -135,19 +135,28 @@ MCO_OBJC_SYNTHESIZE_BOOL(setSmtpEnabled, isSmtpEnabled)
     return MCO_OBJC_BRIDGE_GET(smtpServer);
 }
 
-- (NSError *) imapError
+- (NSArray *) imapErrors
 {
-    return [NSError mco_errorWithErrorCode:_validator->imapError()];
+    NSMutableArray *errors = [NSMutableArray new];
+    for (unsigned index = 0; index < _validator->imapErrors()->count(); index++)
+        [errors addObject:[NSError mco_errorWithErrorCode:(mailcore::ErrorCode)((mailcore::Value *)_validator->imapErrors()->objectAtIndex(index))->intValue()]];
+    return [errors copy];
 }
 
-- (NSError *) popError
+- (NSArray *) popErrors
 {
-    return [NSError mco_errorWithErrorCode:_validator->popError()];
+    NSMutableArray *errors = [NSMutableArray new];
+    for (unsigned index = 0; index < _validator->popErrors()->count(); index++)
+        [errors addObject:[NSError mco_errorWithErrorCode:(mailcore::ErrorCode)((mailcore::Value *)_validator->popErrors()->objectAtIndex(index))->intValue()]];
+    return [errors copy];
 }
 
-- (NSError *) smtpError
+- (NSArray *) smtpErrors
 {
-    return [NSError mco_errorWithErrorCode:_validator->smtpError()];
+    NSMutableArray *errors = [NSMutableArray new];
+    for (unsigned index = 0; index < _validator->smtpErrors()->count(); index++)
+        [errors addObject:[NSError mco_errorWithErrorCode:(mailcore::ErrorCode)((mailcore::Value *)_validator->smtpErrors()->objectAtIndex(index))->intValue()]];
+    return [errors copy];
 }
 
 @end
