@@ -58,9 +58,9 @@ namespace mailcore {
         virtual NetService * imapServer();
         virtual NetService * popServer();
         virtual NetService * smtpServer();
-        virtual ErrorCode imapError();
-        virtual ErrorCode popError();
-        virtual ErrorCode smtpError();
+        virtual Array * imapErrors();
+        virtual Array * popErrors();
+        virtual Array * smtpErrors();
         
         virtual void start();
         virtual void cancel();
@@ -80,9 +80,9 @@ namespace mailcore {
         NetService * mImapServer;
         NetService * mPopServer;
         NetService * mSmtpServer;
-        ErrorCode mImapError;
-        ErrorCode mPopError;
-        ErrorCode mSmtpError;
+        Array * /* ErrorCode */ mImapErrors;
+        Array * /* ErrorCode */ mPopErrors;
+        Array * /* ErrorCode */ mSmtpErrors;
         
         MailProvider * mProvider;
         

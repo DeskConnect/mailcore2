@@ -39,9 +39,9 @@
 @property (nonatomic, retain, readonly) MCONetService * imapServer;
 @property (nonatomic, retain, readonly) MCONetService * popServer;
 @property (nonatomic, retain, readonly) MCONetService * smtpServer;
-@property (nonatomic, retain, readonly) NSError * imapError;
-@property (nonatomic, retain, readonly) NSError * popError;
-@property (nonatomic, retain, readonly) NSError * smtpError;
+@property (nonatomic, retain, readonly) NSArray * imapErrors;
+@property (nonatomic, retain, readonly) NSArray * popErrors;
+@property (nonatomic, retain, readonly) NSArray * smtpErrors;
 
 /**
  Starts the asynchronous account validation operation.
