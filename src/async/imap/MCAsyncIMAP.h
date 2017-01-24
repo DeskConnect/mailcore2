@@ -12,6 +12,8 @@
 
 #include <MailCore/MCIMAPAsyncSession.h>
 #include <MailCore/MCIMAPOperation.h>
+#include <MailCore/MCIMAPNoopOperation.h>
+#include <MailCore/MCIMAPConnectOperation.h>
 #include <MailCore/MCIMAPFetchFoldersOperation.h>
 #include <MailCore/MCIMAPAppendMessageOperation.h>
 #include <MailCore/MCIMAPCopyMessagesOperation.h>

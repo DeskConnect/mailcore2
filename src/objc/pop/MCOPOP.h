@@ -12,6 +12,7 @@
 
 #import <MailCore/MCOPOPSession.h>
 #import <MailCore/MCOPOPOperation.h>
+#import <MailCore/MCOPOPNoopOperation.h>
 #import <MailCore/MCOPOPFetchHeaderOperation.h>
 #import <MailCore/MCOPOPFetchMessageOperation.h>
 #import <MailCore/MCOPOPFetchMessagesOperation.h>

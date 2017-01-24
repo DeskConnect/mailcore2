@@ -14,5 +14,6 @@
 #include <MailCore/MCMailProvider.h>
 #include <MailCore/MCNetService.h>
 #include <MailCore/MCAccountValidator.h>
+#include <MailCore/MCMXRecordResolverOperation.h>
 
 #endif

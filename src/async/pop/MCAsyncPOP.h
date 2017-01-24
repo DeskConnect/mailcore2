@@ -12,6 +12,7 @@
 
 #include <MailCore/MCPOPAsyncSession.h>
 #include <MailCore/MCPOPOperation.h>
+#include <MailCore/MCPOPNoopOperation.h>
 #include <MailCore/MCPOPFetchHeaderOperation.h>
 #include <MailCore/MCPOPFetchMessageOperation.h>
 #include <MailCore/MCPOPFetchMessagesOperation.h>

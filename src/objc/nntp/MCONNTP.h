@@ -12,6 +12,7 @@
 
 #include <MailCore/MCONNTPSession.h>
 #include <MailCore/MCONNTPOperation.h>
+#include <MailCore/MCONNTPDisconnectOperation.h>
 #include <MailCore/MCONNTPFetchHeaderOperation.h>
 #include <MailCore/MCONNTPFetchArticleOperation.h>
 #include <MailCore/MCONNTPFetchAllArticlesOperation.h>
